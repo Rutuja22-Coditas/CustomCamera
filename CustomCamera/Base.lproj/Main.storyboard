@@ -3,7 +3,6 @@
     <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -18,27 +17,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zk-Tf-bCF">
-                                <rect key="frame" x="456" y="1226" width="113" height="112"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.inset.filled" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sW0-U2-4Lk">
+                                <rect key="frame" x="448" y="1168.5" width="128" height="127"/>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="112" id="S74-ft-H1a"/>
+                                    <constraint firstAttribute="height" constant="128" id="583-US-QEU"/>
+                                    <constraint firstAttribute="width" constant="128" id="uuI-CA-JUK"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain">
-                                    <imageReference key="image" image="circle.inset.filled" catalog="system" symbolScale="large"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
-                                </buttonConfiguration>
-                            </button>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2zk-Tf-bCF" secondAttribute="trailing" constant="455" id="IhQ-FM-e9t"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2zk-Tf-bCF" secondAttribute="bottom" constant="28" id="TAh-sK-Af2"/>
-                            <constraint firstItem="2zk-Tf-bCF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="456" id="xB6-P5-rVk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sW0-U2-4Lk" secondAttribute="bottom" constant="70" id="GfF-vj-hZX"/>
+                            <constraint firstItem="sW0-U2-4Lk" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Vfg-d6-jSj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="AQa-1Z-Qjz"/>
+                    <connections>
+                        <outlet property="takePhotoClickedImgV" destination="sW0-U2-4Lk" id="fxm-6r-Ecw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -119,6 +117,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZC9-A3-hBO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2160" y="-22"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="ybI-vq-VIi">
+            <objects>
+                <viewController storyboardIdentifier="PhotoViewController" id="dHS-nR-Xnw" customClass="PhotoViewController" customModule="CustomCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HvE-0R-3rh">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OVb-Ps-pDp">
+                                <rect key="frame" x="0.0" y="92" width="1024" height="1224"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1af-wS-dx7">
+                                <rect key="frame" x="20" y="20" width="67" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="67" id="HuI-fn-wYN"/>
+                                    <constraint firstAttribute="height" constant="64" id="Klk-ZP-KOZ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
+                                <connections>
+                                    <action selector="backButtonClicked:" destination="dHS-nR-Xnw" eventType="touchUpInside" id="Hmy-GN-NhZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CVX-0K-TZf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="OVb-Ps-pDp" firstAttribute="leading" secondItem="CVX-0K-TZf" secondAttribute="leading" id="M3f-7N-Fua"/>
+                            <constraint firstItem="OVb-Ps-pDp" firstAttribute="trailing" secondItem="CVX-0K-TZf" secondAttribute="trailing" id="TJx-5w-cka"/>
+                            <constraint firstItem="OVb-Ps-pDp" firstAttribute="top" secondItem="CVX-0K-TZf" secondAttribute="top" constant="72" id="ZeR-fv-Wco"/>
+                            <constraint firstItem="OVb-Ps-pDp" firstAttribute="bottom" secondItem="CVX-0K-TZf" secondAttribute="bottom" id="gSV-vj-t1I"/>
+                            <constraint firstItem="1af-wS-dx7" firstAttribute="top" secondItem="CVX-0K-TZf" secondAttribute="top" id="gxm-4i-Oyj"/>
+                            <constraint firstItem="1af-wS-dx7" firstAttribute="leading" secondItem="CVX-0K-TZf" secondAttribute="leading" constant="20" id="soT-3y-DBR"/>
+                        </constraints>
+                    </view>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="takenPhoto" destination="OVb-Ps-pDp" id="gW5-kP-rd9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p7c-Q1-ZXX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2832.421875" y="-22.401171303074669"/>
         </scene>
     </scenes>
     <resources>

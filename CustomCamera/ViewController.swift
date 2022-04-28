@@ -10,6 +10,7 @@ import AVFoundation
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    @IBOutlet weak var takePhotoClickedImgV: UIImageView!
     let captureSession = AVCaptureSession()
     var preViewLayer : CALayer!
 
@@ -18,9 +19,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareCamera()
+        
+        let shutterImgTap = UITapGestureRecognizer(target: self, action: #selector(takePhotoTapped))
+        takePhotoClickedImgV.addGestureRecognizer(shutterImgTap)
+        takePhotoClickedImgV.isUserInteractionEnabled = true
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        prepareCamera()
+    }
     func prepareCamera(){
         captureSession.sessionPreset = .photo
         if let availableDevices = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera], mediaType: AVMediaType.video, position: .front).devices.first{
@@ -58,16 +66,22 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         dataOutput.setSampleBufferDelegate(self, queue: queue)
         
     }
-    
+    @objc func takePhotoTapped(){
+        print("clciked")
+        takePhoto = true
+    }
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if takePhoto {
             takePhoto = false
             
              let image = self.getImageFromSampleBuffer(buffer: sampleBuffer)
-                let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageViewController") as? ImageViewController
-                photoVC?.selectedImages.append(image)
+                let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoViewController") as? PhotoViewController
+            photoVC?.photoToShow = image
+               // photoVC?.selectedImages.append(image)
                 DispatchQueue.main.async {
-                    self.present(photoVC!, animated: true, completion: nil)
+                    self.present(photoVC!, animated: true) {
+                        self.stopCaptureSession()
+                    }
                 }
             
         }
@@ -87,6 +101,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 
         }
         return .add
+    }
+    
+    func stopCaptureSession(){
+        self.captureSession.stopRunning()
+        
+        if let inputs = captureSession.inputs as? [AVCaptureDeviceInput]{
+            for input in inputs {
+                self.captureSession.removeInput(input)
+            }
+        }
     }
 }
 
